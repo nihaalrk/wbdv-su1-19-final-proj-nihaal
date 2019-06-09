@@ -44,11 +44,16 @@ export default class RedditSearch extends Component {
     }
 
     executeSearch() {
+        console.log("searching...");
         let currentComponent = this;
         this.redditService.findThreads(this.state.subreddit, this.state.keyword).then(function(threads) {
-            if (threads.data) {
+            if (threads.data && threads.data.children.length > 0) {
                 currentComponent.setState({
                     threads: threads.data.children
+                })
+            } else {
+                currentComponent.setState({
+                    threads: []
                 })
             }
         });
@@ -66,7 +71,7 @@ export default class RedditSearch extends Component {
                         <div className="col-5">
                             <input type="text"className="form-control" id="input-keyword" placeholder="Keyword (e.g. america)" onChange={this.keywordChanged} value={this.state.keyword}/>
                         </div>
-                        <div className="col-1">
+                        <div className="col-1" onClick={() => this.executeSearch()}>
                             <Link to={this.state.subreddit && this.state.keyword ? "/search/"+this.state.subreddit+"/"+this.state.keyword : "/search"}>
                                 <i id="search-icon" className="fa fa-search fa-2x"></i>
                             </Link>

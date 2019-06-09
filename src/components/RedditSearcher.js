@@ -17,7 +17,7 @@ export default class RedditSearcher extends React.Component {
                                render={() => <RedditSearch/>}/>
                         <Route path="/search/:subreddit/:keyword" exact
                                render={() => <RedditSearch/>}/>
-                        <Route path="/threads/:subreddit/:id"
+                        <Route path="/details/:subreddit/:id"
                                render={() => <ThreadDetails/>}/>
                     </div>
                 </Router>
