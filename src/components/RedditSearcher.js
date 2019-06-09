@@ -1,14 +1,10 @@
 import React from 'react'
 import RedditSearch from "./RedditSearch";
+import ThreadDetails from "./ThreadDetails"
 
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
 
 export default class RedditSearcher extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="container">
@@ -19,6 +15,10 @@ export default class RedditSearcher extends React.Component {
 
                         <Route path="/search" exact
                                render={() => <RedditSearch/>}/>
+                        <Route path="/search/:subreddit/:keyword" exact
+                               render={() => <RedditSearch/>}/>
+                        <Route path="/threads/:subreddit/:id"
+                               render={() => <ThreadDetails/>}/>
                     </div>
                 </Router>
             </div>

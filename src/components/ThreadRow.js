@@ -1,10 +1,12 @@
 import React from 'react'
 
-const CourseRow = ({thread}) => {
+import {Link} from 'react-router-dom'
+
+const ThreadRow = ({thread}) => {
  return (
    	<tr>
      	<td>
-     		<a href={thread.data.url}> {thread.data.title} </a>
+     		<Link to={"/threads/" + thread.data.subreddit + "/" + thread.data.id}> {thread.data.title} </Link>
      	</td>
         <td>
             {(new Date(thread.data.created_utc * 1000)).toLocaleDateString("en-US")}
@@ -15,4 +17,4 @@ const CourseRow = ({thread}) => {
    	</tr>
  )
 }
-export default CourseRow;
+export default ThreadRow;
