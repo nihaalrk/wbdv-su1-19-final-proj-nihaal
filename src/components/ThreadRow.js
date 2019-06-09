@@ -7,10 +7,10 @@ const CourseRow = ({thread}) => {
      		<a href={thread.data.url}> {thread.data.title} </a>
      	</td>
         <td>
-            {thread.data.ups}
+            {(new Date(thread.data.created_utc * 1000)).toLocaleDateString("en-US")}
         </td>
         <td>
-            {thread.data.num_comments}
+            {thread.data.ups}
         </td>
    	</tr>
  )

@@ -8,7 +8,7 @@ export default class RedditService {
         return this.myInstance;
     }
 
-    findThreads = () =>
-        fetch("https://www.reddit.com/r/leagueoflegends/search.json?restrict_sr=true&q=Qiyana")
+    findThreads = (subreddit, keyword) =>
+        fetch(`https://www.reddit.com/r/${subreddit}/search.json?restrict_sr=true&q=${keyword}`)
             .then(response => response.json())
 }
