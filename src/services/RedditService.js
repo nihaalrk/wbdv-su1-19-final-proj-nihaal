@@ -9,6 +9,6 @@ export default class RedditService {
     }
 
     findThreads = () =>
-        fetch("https://www.reddit.com/r/leagueoflegends/search")
+        fetch("https://www.reddit.com/r/leagueoflegends/search.json?restrict_sr=true&q=Qiyana")
             .then(response => response.json())
 }
