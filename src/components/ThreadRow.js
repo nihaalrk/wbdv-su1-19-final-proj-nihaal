@@ -6,7 +6,7 @@ const ThreadRow = ({thread}) => {
  return (
    	<tr>
      	<td>
-     		<Link to={"/details/" + thread.data.subreddit + "/" + thread.data.id}> {thread.data.title} </Link>
+     		<Link to={"/details/t/" + thread.data.subreddit + "/" + thread.data.id}> {thread.data.title} </Link>
      	</td>
         <td>
             {(new Date(thread.data.created_utc * 1000)).toLocaleDateString("en-US")}

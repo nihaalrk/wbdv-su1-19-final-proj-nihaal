@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RedditService from '../services/RedditService'
+import RedditThreadService from '../services/RedditThreadService'
 import ThreadRow from './ThreadRow'
 
 import {Link} from 'react-router-dom'
@@ -9,7 +9,7 @@ export default class RedditSearch extends Component {
     constructor(props) {
         super(props);
 
-        this.redditService = RedditService.getInstance();
+        this.redditService = RedditThreadService.getInstance();
         this.state = {
             threads: [],
             subreddit: '',
