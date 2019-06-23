@@ -15,25 +15,66 @@ export default class Profile extends Component {
       username: '',
       password: '',
       redditUsername: '',
-      state: ''
+      state: '',
+      self: false
     };
+
+    const pathname = window.location.pathname;
+    const paths = pathname.split('/');
+    const type = paths[2];
+    const userId = paths[3];
 
     this.userService = UserService.getInstance();
     let thisComponent = this;
-    this.userService.profile().then(function(currentUser){
-      if (currentUser.username) {
-        thisComponent.setState({
-          user: currentUser,
-          firstName: currentUser.firstName,
-          lastName: currentUser.lastName,
-          email: currentUser.email,
-          username: currentUser.username,
-          password: currentUser.password,
-          redditUsername: currentUser.redditUsername,
-          state: currentUser.state
-        });
+
+    if (type && userId) {
+      if (type === "users") {
+        this.userService.findUser(userId).then(function(user){
+          thisComponent.setState({
+            user: user,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            username: user.username,
+            password: user.password,
+            state: user.state,
+            self: false
+          });
+        })
+      } else {
+        this.userService.findUserOnReddit(userId).then(function(user){
+          thisComponent.setState({
+            user: user,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            username: user.username,
+            password: user.password,
+            redditUsername: user.redditUsername,
+            state: user.state,
+            self: false
+          });
+        })
       }
-    })
+    } else {
+      this.userService.profile().then(function(currentUser){
+        if (currentUser.username) {
+          thisComponent.setState({
+            user: currentUser,
+            firstName: currentUser.firstName,
+            lastName: currentUser.lastName,
+            email: currentUser.email,
+            username: currentUser.username,
+            password: currentUser.password,
+            redditUsername: currentUser.redditUsername,
+            state: currentUser.state,
+            self: true
+          });
+        }
+      })
+    }
+
+    
     this.onChange = this.onChange.bind(this);
     this.logout = this.logout.bind(this);
   }
@@ -46,11 +87,17 @@ export default class Profile extends Component {
   }
 
   logout() {
+    if (!this.state.self) {
+      return;
+    }
     this.userService.logout();
     this.props.history.push({pathname: '/'});
   }
 
   save() {
+    if (!this.state.self) {
+      return;
+    }
     if (!this.state.redditUsername || this.state.redditUsername === '') {
       var user = {
         id: this.state.user.id,
@@ -83,22 +130,35 @@ export default class Profile extends Component {
             <div className="row pb-2">
                 <div className="col-6">
                     <label htmlFor="first-name">First name</label>
-                    <input 
+                    {this.state.self ? <input 
                         id="first-name" 
                         className="form-control"
                         value={this.state.firstName}
                         onChange={(event) => this.onChange("firstName", event)}/>
+                        :
+                      <input 
+                        id="first-name" 
+                        className="form-control"
+                        value={this.state.firstName}
+                        disabled/>}
+                    
                 </div>
                 <div className="col-6">
                     <label htmlFor="last-name">Last name</label>
-                    <input 
+                    {this.state.self ? <input 
                         id="last-name" 
                         className="form-control"
                         value={this.state.lastName}
                         onChange={(event) => this.onChange("lastName", event)}/>
+                        :
+                      <input 
+                        id="last-name" 
+                        className="form-control"
+                        value={this.state.lastName}
+                        disabled/>}
                 </div>
             </div>
-            <div className="row pb-2">
+            <div className={this.state.self ? "row pb-2" : "d-none"}>
                 <div className="col-12">
                     <label htmlFor="email">Email</label>
                     <input 
@@ -120,7 +180,7 @@ export default class Profile extends Component {
                         disabled/>
                 </div>
             </div>
-            <div className="row pb-2">
+            <div className={this.state.self ? "row pb-2" : "d-none"}>
                 <div className="col-12">
                     <label htmlFor="password">Password</label>
                     <input 
@@ -131,7 +191,7 @@ export default class Profile extends Component {
                         onChange={(event) => this.onChange("password", event)}/>
                 </div>
             </div>
-            <div className="row pb-2">
+            <div className={this.state.self ? "row pb-2" : "d-none"}>
                 <div className="col-12">
                     <label htmlFor="state">State</label>
                     <input 
@@ -157,14 +217,14 @@ export default class Profile extends Component {
                 <b className="pb-2"> Threads Liked </b>
                 {this.state.user && this.state.user.likedThreads ? this.state.user.likedThreads.map(thread => <div><Link to={"/details/t/" + thread.subreddit + "/" + thread.id}>{thread.title}</Link></div>) : ""}
             </div>
-            <div className="row pt-3">
+            <div className={this.state.self ? "row pt-3" : "d-none"}>
                 <div className="col-12">
                     <button className="btn btn-primary btn-block" onClick={() => this.save()}>
                         Save
                     </button>
                 </div>
             </div>
-            <div className="row pt-3">
+            <div className={this.state.self ? "row pt-3" : "d-none"}>
                 <div className="col-12">
                     <button className="btn btn-danger btn-block" onClick={() => this.logout()}>
                         Logout

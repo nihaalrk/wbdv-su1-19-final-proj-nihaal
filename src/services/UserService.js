@@ -8,6 +8,14 @@ export default class UserService {
         return this.myInstance;
     }
 
+    findUser = id =>
+        fetch(`http://localhost:8080/api/users/${id}`)
+            .then(response => response.json())
+
+    findUserOnReddit = id =>
+        fetch(`http://localhost:8080/api/usersOnReddit/${id}`)
+            .then(response => response.json())
+
     register = user =>
         fetch(`http://localhost:8080/api/users/`, {
                     credentials: 'include',

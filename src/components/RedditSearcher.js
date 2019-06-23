@@ -25,6 +25,10 @@ export default class RedditSearcher extends React.Component {
                                component={Register}/>
                         <Route path="/profile" exact
                                component={Profile}/>
+                        <Route path="/profile/users/:id" exact
+                               component={Profile}/>
+                        <Route path="/profile/usersOnReddit/:id" exact
+                               component={Profile}/>
                         <Route path="/login" exact
                                component={Login}/>
                         <Route path="/search/:subreddit/:keyword" exact
