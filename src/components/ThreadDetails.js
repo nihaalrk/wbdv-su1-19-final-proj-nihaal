@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import RedditThreadService from '../services/RedditThreadService'
 import RedditUserService from '../services/RedditUserService'
+import UserService from "../services/UserService";
 
 import {Link} from 'react-router-dom'
 
@@ -12,7 +13,8 @@ export default class ThreadDetails extends Component {
 		this.state = {
 			thread: undefined,
 			author: undefined,
-			commenters: undefined
+			commenters: undefined,
+			currentUser: undefined
 		}
 
 		const pathname = window.location.pathname;
@@ -25,6 +27,17 @@ export default class ThreadDetails extends Component {
     this.createThread = this.createThread.bind(this);
     this.addCommenters = this.addCommenters.bind(this);
     this.addCommenter = this.addCommenter.bind(this);
+    this.like = this.like.bind(this);
+
+    this.userService = UserService.getInstance();
+    let thisComponent = this;
+    this.userService.profile().then(function(currentUser){
+      if (currentUser.username && currentUser.redditUsername) {
+        thisComponent.setState({
+          currentUser: currentUser
+        });
+      }
+    })
 
     let currentComponent = this;
     this.redditThreadService.findThread(id).then(function(thread) {
@@ -42,6 +55,10 @@ export default class ThreadDetails extends Component {
     			currentComponent.createThread(subreddit, id);
     		}
     });
+	}
+
+	like() {
+		this.userService.likeThread(this.state.currentUser.id, this.state.thread.id);
 	}
 
 	createThread(subreddit, id) {
@@ -169,6 +186,13 @@ export default class ThreadDetails extends Component {
 			              	<b className="pb-2"> Text </b>
 			              	<p> {this.state.thread ? this.state.thread.text : ""} </p>
 			            </div>
+			            <div className={this.state.currentUser ? "row pt-3 pb-3" : "d-none"}>
+		                <div className="col-12">
+		                    <button className="btn btn-primary btn-block" onClick={() => this.like()}>
+		                        Like
+		                    </button>
+		                </div>
+		            </div>
 			            <div className={this.state.commenters && this.state.commenters.length > 0 ? "" : "d-none"}>
 			            		<b className="pb-2"> Commenters </b>
 			              	{this.state.commenters ? this.state.commenters.map(commenter => <div><Link to={"/details/u/" + commenter.username}>{commenter.username}</Link></div>) : ""}

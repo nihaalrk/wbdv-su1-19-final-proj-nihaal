@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import UserService from "../services/UserService";
 
+import {Link} from 'react-router-dom'
+
 export default class Profile extends Component {
   constructor(props) {
     super(props);
@@ -48,6 +50,31 @@ export default class Profile extends Component {
     this.props.history.push({pathname: '/'});
   }
 
+  save() {
+    if (!this.state.redditUsername || this.state.redditUsername === '') {
+      var user = {
+        id: this.state.user.id,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        email: this.state.email,
+        password: this.state.password,
+        state: this.state.state
+      };
+      this.userService.updateUser(user);
+    } else {
+      var user = {
+        id: this.state.user.id,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        email: this.state.email,
+        password: this.state.password,
+        redditUsername: this.state.redditUsername,
+        state: this.state.state
+      };
+      this.userService.updateUserOnReddit(user);
+    }
+  }
+
   render() {
     return (
       <div>
@@ -90,7 +117,7 @@ export default class Profile extends Component {
                         className="form-control"
                         type="text"
                         value={this.state.username}
-                        onChange={(event) => this.onChange("username", event)}/>
+                        disabled/>
                 </div>
             </div>
             <div className="row pb-2">
@@ -123,12 +150,16 @@ export default class Profile extends Component {
                         className="form-control"
                         type="text"
                         value={this.state.redditUsername}
-                        onChange={(event) => this.onChange("redditUsername", event)}/>
+                        disabled/>
                 </div>
+            </div>
+            <div className={this.state.user && this.state.user.likedThreads && this.state.user.likedThreads.length > 0 ? "" : "d-none"}>
+                <b className="pb-2"> Threads Liked </b>
+                {this.state.user && this.state.user.likedThreads ? this.state.user.likedThreads.map(thread => <div><Link to={"/details/t/" + thread.subreddit + "/" + thread.id}>{thread.title}</Link></div>) : ""}
             </div>
             <div className="row pt-3">
                 <div className="col-12">
-                    <button className="btn btn-primary btn-block">
+                    <button className="btn btn-primary btn-block" onClick={() => this.save()}>
                         Save
                     </button>
                 </div>
