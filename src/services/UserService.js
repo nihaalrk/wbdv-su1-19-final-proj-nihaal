@@ -12,8 +12,16 @@ export default class UserService {
         fetch(`http://localhost:8080/api/users/${id}`)
             .then(response => response.json())
 
+    findUsers = id =>
+        fetch(`http://localhost:8080/api/users`)
+            .then(response => response.json())
+
     findUserOnReddit = id =>
         fetch(`http://localhost:8080/api/usersOnReddit/${id}`)
+            .then(response => response.json())
+
+    findUsersOnReddit = id =>
+        fetch(`http://localhost:8080/api/usersOnReddit`)
             .then(response => response.json())
 
     register = user =>

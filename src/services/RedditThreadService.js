@@ -16,6 +16,10 @@ export default class RedditThreadService {
         fetch(`http://localhost:8080/api/reddit_threads/${id}`)
             .then(response => response.json())
 
+    getThreads = () =>
+        fetch(`http://localhost:8080/api/reddit_threads/`)
+            .then(response => response.json())
+
     createThread = thread =>
         fetch(`http://localhost:8080/api/reddit_threads/`, {
                     method: 'POST',

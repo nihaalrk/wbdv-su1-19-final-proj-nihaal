@@ -91,7 +91,7 @@ export default class Profile extends Component {
       return;
     }
     this.userService.logout();
-    this.props.history.push({pathname: '/'});
+    this.props.history.push({pathname: '/', state: "logout"});
   }
 
   save() {
