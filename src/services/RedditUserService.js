@@ -9,11 +9,11 @@ export default class RedditUserService {
     }
 
     findUser = username =>
-        fetch(`http://localhost:8080/api/reddit_users/${username}`)
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/reddit_users/${username}`)
             .then(response => response.json())
 
     createUser = user =>
-        fetch(`http://localhost:8080/api/reddit_users/`, {
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/reddit_users/`, {
                     method: 'POST',
                     body: JSON.stringify(user),
                     headers: {
@@ -27,7 +27,7 @@ export default class RedditUserService {
             .then(response => response.json())
 
     threadsCommentedOn = username =>
-         fetch(`http://localhost:8080/api/reddit_users/${username}/reddit_threads`)
+         fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/reddit_users/${username}/reddit_threads`)
             .then(response => response.json())    
                   
 }

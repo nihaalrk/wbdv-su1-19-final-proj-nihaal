@@ -13,15 +13,15 @@ export default class RedditThreadService {
             .then(response => response.json())
 
     findThread = (id) =>
-        fetch(`http://localhost:8080/api/reddit_threads/${id}`)
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/reddit_threads/${id}`)
             .then(response => response.json())
 
     getThreads = () =>
-        fetch(`http://localhost:8080/api/reddit_threads/`)
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/reddit_threads/`)
             .then(response => response.json())
 
     createThread = thread =>
-        fetch(`http://localhost:8080/api/reddit_threads/`, {
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/reddit_threads/`, {
                     method: 'POST',
                     body: JSON.stringify(thread),
                     headers: {
@@ -35,7 +35,7 @@ export default class RedditThreadService {
             .then(response => response.json())
 
     addCommenter = (id, username) => 
-        fetch(`http://localhost:8080/api/reddit_threads/${id}/${username}`, {
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/reddit_threads/${id}/${username}`, {
                     method: 'PUT'
                 })
             .then(response => response.json())

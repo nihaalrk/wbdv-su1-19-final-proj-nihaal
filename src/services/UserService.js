@@ -9,23 +9,23 @@ export default class UserService {
     }
 
     findUser = id =>
-        fetch(`http://localhost:8080/api/users/${id}`)
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/users/${id}`)
             .then(response => response.json())
 
     findUsers = id =>
-        fetch(`http://localhost:8080/api/users`)
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/users`)
             .then(response => response.json())
 
     findUserOnReddit = id =>
-        fetch(`http://localhost:8080/api/usersOnReddit/${id}`)
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/usersOnReddit/${id}`)
             .then(response => response.json())
 
     findUsersOnReddit = id =>
-        fetch(`http://localhost:8080/api/usersOnReddit`)
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/usersOnReddit`)
             .then(response => response.json())
 
     register = user =>
-        fetch(`http://localhost:8080/api/users/`, {
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/users/`, {
                     credentials: 'include',
                     method: 'POST',
                     body: JSON.stringify(user),
@@ -36,7 +36,7 @@ export default class UserService {
             .then(response => response)
 
     registerReddit = user =>
-        fetch(`http://localhost:8080/api/usersOnReddit/`, {
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/usersOnReddit/`, {
                     credentials: 'include',
                     method: 'POST',
                     body: JSON.stringify(user),
@@ -47,18 +47,18 @@ export default class UserService {
             .then(response => response)
 
     profile = () =>
-        fetch("http://localhost:8080/api/profile", {
+        fetch("https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/profile", {
             credentials: 'include'
         }).then(response => response.json())
 
     logout = () =>
-        fetch("http://localhost:8080/api/logout", {
+        fetch("https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/logout", {
             method: 'POST',
             credentials: 'include'
         })
     
     login = user =>
-        fetch("http://localhost:8080/api/login", {
+        fetch("https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/login", {
             method: 'POST',
             body: JSON.stringify(user),
             headers: {
@@ -68,7 +68,7 @@ export default class UserService {
         }).then(response => response.json())  
 
     updateUser = user =>
-        fetch(`http://localhost:8080/api/users/${user.id}`, {
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/users/${user.id}`, {
                     credentials: 'include',
                     method: 'PUT',
                     body: JSON.stringify(user),
@@ -79,7 +79,7 @@ export default class UserService {
             .then(response => response)
 
     updateUserOnReddit = user =>
-        fetch(`http://localhost:8080/api/usersOnReddit/${user.id}`, {
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/usersOnReddit/${user.id}`, {
                     credentials: 'include',
                     method: 'PUT',
                     body: JSON.stringify(user),
@@ -90,7 +90,7 @@ export default class UserService {
             .then(response => response)
 
     likeThread = (user_id, thread_id) =>
-        fetch(`http://localhost:8080/api/usersOnReddit/${user_id}/threads/${thread_id}`, {
+        fetch(`https://wbdv-su1-19-final-server-nihaa.herokuapp.com/api/usersOnReddit/${user_id}/threads/${thread_id}`, {
                     credentials: 'include',
                     method: 'PUT',
                     headers: {
